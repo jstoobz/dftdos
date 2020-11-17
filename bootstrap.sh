@@ -54,13 +54,6 @@ fail() {
 	# exit
 }
 
-fancy_echo() {
-  fmt="$1"; shift
-
-  # shellcheck disable=SC2059
-  printf "\\n$fmt\\n" "$@"
-}
-
 clr_screen(){
 	# shellcheck disable=SC2059
 	printf "\033c"
@@ -132,29 +125,11 @@ create_symlinks() {
 	echo "symlinks"
 }
 
-install_cli_tools() {
+install_xcode_cli_tools() {
 	info "Checking for Xcode CLI tools..."
 
+	# if [ "$(xcode-select -p >/dev/null 2>&1)" ]; then
 	if [ "$(xcode-select -p)" ]; then
-		success "Xcode found"
-		return
-	fi
-
-	info "Installing Xcode"
-	xcode-select --install
-	until [ "$(xcode-select -p)" ];
-	do
-		info "Sleeping..."
-		sleep 5
-	done
-	success "Installed Xcode"
-}
-
-install_xcode() {
-	info "Checking for Xcode CLI tools..."
-
-	if [ "$(xcode-select -p >/dev/null 2>&1)" ]; then
-	# if [ "$(xcode-select -p)" ]; then
 		success "Xcode found"
 		return
 	fi
@@ -169,20 +144,16 @@ install_xcode() {
 			grep "\*.*Command Line" |
 			awk -F": " '{print $2}')
 		
-		softwareupdate -i "${PROD}"
-		# softwareupdate -i "${PROD}" --verbose
-
-		# echo "Successfully installed Xcode CLI Tools, now add xcodebuild license"
+		softwareupdate -i "${PROD}" --verbose
 	else
-		echo "OSX_VERS is le 9"
+		xcode-select --install
+		until [ "$(xcode-select -p)" ];
+		do
+			info "Sleeping..."
+			sleep 5
+		done
+		success "Installed Xcode"
 	fi
-
-	# xcode-select --install
-	# until [ "$(xcode-select -p)" ];
-	# do
-	# 	info "Sleeping..."
-	# 	sleep 5
-	# done
 
 	info "Removing temp file..."
 	[ -f "${CLT_PLACEHOLDER}" ] && rm -rf "${CLT_PLACEHOLDER}"
@@ -219,17 +190,6 @@ install_git() {
 	success "Installed git"
 }
 
-test_tmp() {
-	CLT_PLACEHOLDER="/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
-	info "CLT_PLACEHOLDER: ${CLT_PLACEHOLDER}"
-	touch "${CLT_PLACEHOLDER}"
-	# touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
-
-	[ -f "${CLT_PLACEHOLDER}" ] && info "CLT_PLACEHOLDER EXISTS"
-	[ -f "${CLT_PLACEHOLDER}" ] && rm -rf "${CLT_PLACEHOLDER}"
-	[ -f "${CLT_PLACEHOLDER}" ] || info "CLT_PLACEHOLDER DOES NOT EXIST"
-}
-
 main() {
 	ask_for_sudo "$@"
 	clr_screen "$@"
@@ -237,8 +197,7 @@ main() {
 	banner "$@"
 	info "MacOS Version: ${OSX_VERS}"
 	info "MacOS SW Build: ${SW_BUILD}"
-	# install_cli_tools "$@"
-	install_xcode "$@"
+	install_xcode_cli_tools "$@"
 	install_homebrew "$@"
 	install_git "$@"
 	download_dotfiles "$@"
@@ -262,8 +221,7 @@ main() {
 	padding "$@"
 	padding "$@"
 
-	# fancy_echo "Fancy Echo ..."
-	# info "DIR_ACT: $(pwd -P)"
+
 
 	padding "$@"
 	padding "$@"
