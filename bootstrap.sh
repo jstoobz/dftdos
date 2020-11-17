@@ -178,11 +178,11 @@ install_xcode() {
 	fi
 
 	# xcode-select --install
-	until [ "$(xcode-select -p)" ];
-	do
-		info "Sleeping..."
-		sleep 5
-	done
+	# until [ "$(xcode-select -p)" ];
+	# do
+	# 	info "Sleeping..."
+	# 	sleep 5
+	# done
 
 	info "Removing temp file..."
 	[ -f "${CLT_PLACEHOLDER}" ] && rm -rf "${CLT_PLACEHOLDER}"
