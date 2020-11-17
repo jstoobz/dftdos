@@ -199,8 +199,8 @@ install_homebrew() {
 	fi
 
 	info "Installing Homebrew..."
-	printf "\n"
-		| /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+	printf "\n" |
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 	brew update
 	brew upgrade
 	success "Homebrew was installed"
