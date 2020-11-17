@@ -153,7 +153,8 @@ install_cli_tools() {
 install_xcode() {
 	info "Checking for Xcode CLI tools..."
 
-	if [ "$(xcode-select -p)" ]; then
+	if [ "$(xcode-select -p) &>/dev/null" ]; then
+	# if [ "$(xcode-select -p)" ]; then
 		success "Xcode found"
 		return
 	fi
@@ -262,8 +263,6 @@ main() {
 	padding "$@"
 	padding "$@"
 	padding "$@"
-
-	test_tmp "$@"
 
 	# fancy_echo "Fancy Echo ..."
 	# info "DIR_ACT: $(pwd -P)"
