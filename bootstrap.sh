@@ -159,7 +159,7 @@ install_xcode() {
 		return
 	fi
 
-	info "Installing Xcode"
+	info "Installing Xcode CLI Tools..."
 
 	if [ "$OSX_VERS" -ge 9 ]; then
 		# This temporary file prompts the 'softwareupdate' utility to list the Command Line Tools
@@ -169,13 +169,10 @@ install_xcode() {
 			grep "\*.*Command Line" |
 			awk -F": " '{print $2}')
 		
-		info "Xcode CLI Tools Version: ${PROD}"
-
-		echo "Installing Xcode CLI Tools..."
-		softwareupdate -i "${PROD}" --verbose
+		softwareupdate -i "${PROD}"
+		# softwareupdate -i "${PROD}" --verbose
 
 		# echo "Successfully installed Xcode CLI Tools, now add xcodebuild license"
-		
 	else
 		echo "OSX_VERS is le 9"
 	fi
@@ -202,7 +199,8 @@ install_homebrew() {
 	fi
 
 	info "Installing Homebrew..."
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+	printf "\n"
+		| /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 	brew update
 	brew upgrade
 	success "Homebrew was installed"
