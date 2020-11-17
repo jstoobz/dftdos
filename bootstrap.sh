@@ -128,9 +128,8 @@ create_symlinks() {
 install_xcode_cli_tools() {
 	info "Checking for Xcode CLI tools..."
 
-	# if [ "$(xcode-select -p >/dev/null 2>&1)" ]; then
-	if [ "$(xcode-select -p 2>&1 /dev/null)" ]; then
-	# if [ "$(xcode-select -p)" ]; then
+	# - Add cleaner handling of error output if xcode is not installed
+	if [ "$(xcode-select -p)" ]; then
 		success "Xcode found"
 		return
 	fi
