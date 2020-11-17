@@ -153,7 +153,7 @@ install_cli_tools() {
 install_xcode() {
 	info "Checking for Xcode CLI tools..."
 
-	if [ "$(xcode-select -p) &>/dev/null" ]; then
+	if [ "$(xcode-select -p >/dev/null 2>&1)" ]; then
 	# if [ "$(xcode-select -p)" ]; then
 		success "Xcode found"
 		return
