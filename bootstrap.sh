@@ -126,6 +126,7 @@ download_dotfiles() {
 create_symlinks() {
 	info "Creating symlinks..."
 	ln -s "$1" "$2"
+	source $1
 	success "linked $1 to $2"
 }
 
