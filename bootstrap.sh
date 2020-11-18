@@ -122,7 +122,9 @@ download_dotfiles() {
 }
 
 create_symlinks() {
-	echo "symlinks"
+	info "Creating symlinks..."
+	ln -s "$1" "$2"
+	success "linked $1 to $2"
 }
 
 install_xcode_cli_tools() {
@@ -202,6 +204,7 @@ main() {
 	install_git "$@"
 	download_dotfiles "$@"
 
+	create_symlinks "env-test.sh" "${HOME}/env-test.sh"
 	# create_directories
 	# create_symbolic_links
 	# create_local_config_files
