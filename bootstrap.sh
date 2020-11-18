@@ -9,7 +9,7 @@ cd "$(dirname "$0")/.."
 # Prints the actual path (as opposed to symbolic)
 DOTFILES_ROOT=$(pwd -P)
 
-GITHUB_REPOSITORY="jstoobz/dft"
+GITHUB_REPOSITORY="jstoobz/dftdos"
 # DOTFILES_ORIGIN="git@github.com:$GITHUB_REPOSITORY.git"
 DOTFILES_TARBALL_URL="https://github.com/$GITHUB_REPOSITORY/tarball/master"
 DF_HOME="${HOME}/.dotfiles"
