@@ -93,6 +93,8 @@ download() {
 	url="$1"
 	output="$2"
 
+	info "url: ${url}"
+
 	if command_exists curl; then
 		curl -LsSo "$output" "$url" >/dev/null 2>&1
 		return $?
