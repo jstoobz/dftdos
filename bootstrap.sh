@@ -123,11 +123,27 @@ download_dotfiles() {
 	info "Current working directory: $(pwd -P)"
 }
 
-create_symlinks() {
+create_symlink() {
+  if [ -e "$2" ]; then
+    info "Already exists: $file"
+  else
+    ln -s "$1" "$2"
+    info "Create the symbolic link: $file"
+  fi
+}
+
+create_dotfile_symlinks() {
+	DOT_FILES=(
+		env-test.sh
+	)
+
 	info "Creating symlinks..."
-	ln -s "$1" "$2"
-	source $2
-	success "linked $1 to $2"
+	
+	for file in ${DOT_FILES[@]}; do
+		create_symlinks "${DF_HOME}/$file" "${HOME}/$file"
+	done
+
+	success "Created symlinks"
 }
 
 install_xcode_cli_tools() {
@@ -207,7 +223,8 @@ main() {
 	install_git "$@"
 	download_dotfiles "$@"
 
-	create_symlinks "env-test.sh" "${HOME}/env-test.sh"
+	create_dotfile_symlinks "$@"
+
 	# create_directories
 	# create_symbolic_links
 	# create_local_config_files
