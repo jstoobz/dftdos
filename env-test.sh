@@ -46,6 +46,7 @@ alias cmt="clear && mix test"
 
 alias figstoobz='printf "\e[92m" && figlet -f standard "jstoobz"'
 alias cfigstoobz='clear &&printf "\e[92m" && figlet -f standard "jstoobz"'
+alias cfigtest='clear &&printf "\e[92m" && figlet -f standard "test"'
 
 alias cshb='clear && ./bootstrap.sh'
 alias cshc='clear && shellcheck ./bootstrap.sh'
