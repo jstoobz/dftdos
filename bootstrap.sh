@@ -149,8 +149,7 @@ create_dotfile_symlinks() {
 install_xcode_cli_tools() {
 	info "Checking for Xcode CLI tools..."
 
-	# - Add cleaner handling of error output if xcode is not installed
-	if [ "$(xcode-select -p)" ]; then
+	if [ -f "/Library/Developer/CommandLineTools/usr/bin/git" ]; then
 		success "Xcode found"
 		return
 	fi
@@ -187,6 +186,10 @@ install_homebrew() {
 
 	if command_exists brew; then
 		success "You already have Homebrew installed"
+		info "Updating Homebrew..."
+		brew update
+		brew upgrade
+		success "Updated Homebrew"
 		return
 	fi
 
