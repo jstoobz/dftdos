@@ -140,7 +140,7 @@ create_dotfile_symlinks() {
 	info "Creating symlinks..."
 	
 	for file in ${DOT_FILES[@]}; do
-		create_symlinks "${DF_HOME}/$file" "${HOME}/$file"
+		create_symlink "${DF_HOME}/$file" "${HOME}/$file"
 	done
 
 	success "Created symlinks"
